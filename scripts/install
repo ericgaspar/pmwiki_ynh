@@ -52,7 +52,7 @@ ynh_app_setting_set --app=$app --key=path --value=$path_url
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --time --weight=1
+ynh_script_progression --message="Installing dependencies..." --weight=8
 
 ynh_install_app_dependencies $pkg_dependencies
 
@@ -96,36 +96,14 @@ ynh_script_progression --message="Configuring PHP-FPM..." --time --weight=1
 ynh_add_fpm_config
 
 #=================================================
-# CREATE DATA DIRECTORY
-#=================================================
-ynh_script_progression --message="Creating a data directory..." --time --weight=1
-
-datadir=/home/yunohost.app/$app
-ynh_app_setting_set --app=$app --key=datadir --value=$datadir
-
-mkdir -p $datadir
-
-chmod 750 "$datadir"
-chmod -R o-rwx "$datadir"
-chown -R $app:www-data "$datadir"
-
-#=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..." --time --weight=1
+# ynh_script_progression --message="Adding a configuration file..." --time --weight=1
 
-ynh_add_config --template="some_config_file" --destination="$final_path/some_config_file"
+# ynh_add_config --template="some_config_file" --destination="$final_path/some_config_file"
 
-chmod 400 "$final_path/some_config_file"
-chown $app:$app "$final_path/some_config_file"
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression --message="Configuring a systemd service..." --time --weight=1
-
-# Create a dedicated systemd config
-ynh_add_systemd_config
+# chmod 400 "$final_path/some_config_file"
+# chown $app:$app "$final_path/some_config_file"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -145,8 +123,6 @@ ynh_script_progression --message="Configuring permissions..." --time --weight=1
 # Make app public if necessary
 if [ $is_public -eq 1 ]
 then
-	# Everyone can access the app.
-	# The "main" permission is automatically created before the install script.
 	ynh_permission_update --permission="main" --add="visitors"
 fi
 
