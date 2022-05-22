@@ -15,3 +15,5 @@ $DefaultPasswords['upload'] = pmcrypt('secrettwo');
 date_default_timezone_set('__TIMEZONE__');
 
 $TimeFmt = '%B %d, %Y, at %I:%M %p %Z';
+
+$AuthUser['ldap'] = 'ldap://127.0.0.1:389/ou=users,dc=yunohost,dc=org?uid';
