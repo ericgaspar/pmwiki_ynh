@@ -12,6 +12,6 @@ $EnableUpload = 1;
 $DefaultPasswords['upload'] = pmcrypt('secrettwo');
 
 # Uncomment and change these if your server is not in your timezone
-# date_default_timezone_set('__TIMEZONE__');
+date_default_timezone_set('__TIMEZONE__');
 
 $TimeFmt = '%B %d, %Y, at %I:%M %p %Z';
